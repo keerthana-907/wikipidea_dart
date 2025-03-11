@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "886406325228",
+    "project_id": "wikki-71f80",
+    "storage_bucket": "wikki-71f80.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886406325228:android:3836793c98e558e39b16c9",
+        "android_client_info": {
+          "package_name": "com.example.wikipidea_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhw5lxjd9qb0CDTTfp7DYltOeIs02dcEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
