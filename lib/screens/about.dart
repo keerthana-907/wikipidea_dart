@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wikipidea_application/screens/contents.dart';
+import 'package:wikipidea_application/screens/contents2.dart';
 import 'package:wikipidea_application/screens/homepage.dart';
 import 'package:wikipidea_application/screens/upload_data.dart';
 
@@ -81,6 +81,17 @@ class _AboutPageState extends State<AboutPage> {
                   });
                 },
               ),
+              // ListTile(
+              //   leading: const Icon(Icons.list),
+              //   title: const Text('Data'),
+              //   onTap: () {
+              //     //    setState(() {
+              //     //     selectedPage = "contents page";
+              //     //   });
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => Dummy()));
+              //   },
+              // ),
             ],
           ),
         ),

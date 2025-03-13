@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 // import 'package:random_string/random_string.dart';
 import 'package:wikipidea_application/screens/About.dart';
+// import 'package:wikipidea_application/screens/dummy.dart';
 import 'package:wikipidea_application/screens/homepage.dart';
 import 'package:wikipidea_application/screens/upload_data.dart';
 import 'package:wikipidea_application/service/database.dart';
@@ -113,6 +114,7 @@ class _ContentsState extends State<Contents> {
                                   GestureDetector(
                                     onTap: () {
                                       print("button clicked");
+
                                       DatabaseMethods().deleteData(ds["id"]);
                                       print("data deleted");
                                       ScaffoldMessenger.of(context)
@@ -120,6 +122,22 @@ class _ContentsState extends State<Contents> {
                                               content: Text("DELETED!")));
                                     },
                                     child: Icon(Icons.delete),
+                                  ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      // print("button clicked");
+
+                                      // DatabaseMethods().deleteData(ds["id"]);
+                                      // print("data deleted");
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(SnackBar(
+                                      //         content: Text("DELETED!")));
+                                    },
+                                    child: Icon(Icons.cancel),
                                   )
                                 ],
                               ),
@@ -223,6 +241,17 @@ class _ContentsState extends State<Contents> {
                 });
               },
             ),
+            // ListTile(
+            //   leading: const Icon(Icons.list),
+            //   title: const Text('Data'),
+            //   onTap: () {
+            //     //    setState(() {
+            //     //     selectedPage = "contents page";
+            //     //   });
+            //     Navigator.push(
+            //         context, MaterialPageRoute(builder: (context) => Dummy()));
+            //   },
+            // ),
           ],
         ),
       ),
@@ -270,6 +299,10 @@ class _ContentsState extends State<Contents> {
                       labelText: 'Title',
                     ),
                     maxLines: 1,
+                    onChanged: (value) {
+                      titlename.text = value;
+                    },
+                    readOnly: false,
                   ),
                   TextField(
                     controller: discriptiondata,

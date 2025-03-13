@@ -8,7 +8,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:random_string/random_string.dart';
 import 'package:wikipidea_application/screens/About.dart';
-import 'package:wikipidea_application/screens/contents.dart';
+import 'package:wikipidea_application/screens/contents2.dart';
+// import 'package:wikipidea_application/screens/dummy.dart';
 import 'package:wikipidea_application/screens/homepage.dart';
 import 'package:wikipidea_application/service/database.dart';
 
@@ -24,8 +25,8 @@ class _UploadDataState extends State<UploadData> {
   String downloadURL = '';
   TextEditingController titlename = new TextEditingController();
   TextEditingController discriptiondata = new TextEditingController();
-
-  void _pickAndUploadImage() async {
+  bool isImageuploaded = false;
+  Future<String> _pickAndUploadImage() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
@@ -42,17 +43,20 @@ class _UploadDataState extends State<UploadData> {
         UploadTask uploadTask = storageRef.putData(fileBytes);
         TaskSnapshot snapshot = await uploadTask;
         downloadURL = await snapshot.ref.getDownloadURL();
-        print("Image uploaded successfully: $downloadURL");
+        // print("Image uploaded successfully: $downloadURL");
       } catch (e) {
         print("Error uploading image: $e");
       }
     } else {
       print('No file selected');
     }
+    return downloadURL;
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -118,6 +122,18 @@ class _UploadDataState extends State<UploadData> {
                   });
                 },
               ),
+              // ListTile(
+              //   leading: const Icon(Icons.list),
+              //   title: const Text('Dummy'),
+              //   onTap: () {
+              //     setState(() {
+              //       selectedPage = 'Display page';
+              //       Navigator.push(context,
+              //           MaterialPageRoute(builder: (context) => Dummy()));
+              //       // Navigator.pop(context);
+              //     });
+              //   },
+              // ),
             ],
           ),
         ),
@@ -130,8 +146,7 @@ class _UploadDataState extends State<UploadData> {
                 child: TextField(
                   controller: titlename,
                   decoration: InputDecoration(
-                    labelText: 'Title',
-                  ),
+                      labelText: 'Title', labelStyle: TextStyle()),
                   keyboardType: TextInputType.multiline,
                   maxLines: 1,
                 )),
@@ -146,6 +161,24 @@ class _UploadDataState extends State<UploadData> {
             SizedBox(
               height: 10,
             ),
+            Text(
+              "Image: ",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.normal),
+            ),
+            isImageuploaded
+                ? Image.network(
+                    downloadURL,
+                    height: 200,
+                    width: 200,
+                    // color: Colors.white,
+                  )
+                : SizedBox.shrink(),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -156,16 +189,33 @@ class _UploadDataState extends State<UploadData> {
                             borderRadius: BorderRadius.circular(2))),
                     child: ElevatedButton(
                         onPressed: () {
-                          _pickAndUploadImage();
+                          _pickAndUploadImage().then((value) {
+                            print(value);
+                            setState(() {
+                              downloadURL = value;
+                              isImageuploaded = true;
+                            });
+                          });
                         },
-
                         // print("Image uploaded");
-
                         child: Text(
                           "Upload Image",
                           style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.normal),
+                              fontSize: 15.0, fontWeight: FontWeight.bold),
                         ))),
+                // SizedBox(
+                //   height: 20,
+                //   width: 20,
+                // ),
+                // Image.network(
+                //   downloadURL,
+                //   height: 200,
+                //   width: 200,
+                // ),
+                // SizedBox(
+                //   height: 10,
+                //   width: 20,
+                // ),
                 SizedBox(width: 30, height: 30),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -210,7 +260,7 @@ class _UploadDataState extends State<UploadData> {
                         child: Text(
                           "Create",
                           style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.normal),
+                              fontSize: 15.0, fontWeight: FontWeight.bold),
                         ))),
               ],
             )
